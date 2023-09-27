@@ -1,0 +1,24 @@
+repos:
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        files: '^.*\.py$'
+        exclude: '^.*__init__\.py$'  # Exclude __init__.py
+        name: isort (python)
+        args: ["--profile", "black"]
+
+  - repo: https://github.com/myint/autoflake
+    rev: 'v1.4'
+    hooks:
+      - id: autoflake
+        files: '^.*\.py$'
+        exclude: '^.*__init__\.py$'  # Exclude __init__.py
+        args: ['--in-place', '--remove-all-unused-imports']
+        
+  - repo: https://github.com/psf/black
+    rev: 22.6.0
+    hooks:
+      - id: black
+        files: '^.*\.py$'
+        exclude: '^.*__init__\.py$'  # Exclude __init__.py

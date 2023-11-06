@@ -15,12 +15,12 @@ class HumanActivitySensor:
 
     def __connect_to_kafka(self):
         settings = KafkaSettings()
-        self.kafka_producer = Producer(
-            {
-                "bootstrap.servers": settings.bootstrap_servers,
-                "client.id": settings.client_id,
-            }
-        )
+
+        conf = {
+            "bootstrap.servers": settings.bootstrap_servers,
+            "client.id": settings.client_id,
+        }
+        self.kafka_producer = Producer(conf)
 
     def start_sensor_stream(self):
 

@@ -48,6 +48,3 @@ class HumanActivitySensor:
             self.__push_sensor_data(self.data_source.iloc[i % rows].to_dict())
             self.kafka_producer.flush()
             i += 1
-
-            if i == 10:
-                break

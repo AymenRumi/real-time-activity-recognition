@@ -33,9 +33,38 @@ services:
     # The restart policy is set to 'always' to ensure it retries in case of initial failure.
     restart: always
 
+  jobmanager:
+    image: flink:latest
+    container_name: jobmanager
+    ports:
+      - "8081:8081"
+    networks:
+      - kafka-network
+    command: jobmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+
+  taskmanager:
+    image: flink:latest
+    container_name: taskmanager
+    depends_on:
+      - jobmanager
+    networks:
+      - kafka-network
+    command: taskmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+        taskmanager.numberOfTaskSlots: 2
+
 networks:
   kafka-network:
     driver: bridge
+
+
 
   # jobmanager:
   #   image: flink:latest

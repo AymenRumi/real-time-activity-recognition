@@ -52,6 +52,3 @@ class HumanActivitySensor:
             )
             self.kafka_producer.flush()
             i += 1
-
-            if i == 10:
-                break

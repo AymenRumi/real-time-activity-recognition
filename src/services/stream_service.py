@@ -21,7 +21,7 @@ class HumanActivitySensor:
     def __connect_to_source(self):
         self.data_source = pd.read_csv(self.settings.KAFKA_DATA_SOURCE)
 
-    def __connect_to_kafka(self):
+    def __connect_to_kafka(self) -> None:
 
         conf = {
             "bootstrap.servers": self.settings.KAFKA_BOOTSTRAP_SERVER,
@@ -30,7 +30,7 @@ class HumanActivitySensor:
 
         self.kafka_producer = Producer(conf)
 
-    def __push_sensor_data(self, data):
+    def __push_sensor_data(self, data: bytes) -> None:
         self.kafka_producer.produce(
             self.settings.KAFKA_CLIENT_ID, value=data, callback=self.__delivery_report
         )

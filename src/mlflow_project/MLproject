@@ -1,0 +1,13 @@
+name: my_ml_project
+
+docker_env:
+    image: python:3.8
+    volumes:
+        - .:/my_ml_project
+    command: "pip install -r /my_ml_project/requirements.txt"
+
+entry_points:
+  main:
+    parameters:
+      data_file: {type: str, default: 'data/train.csv'}
+    command: "python train.py -data_file {data_file}"

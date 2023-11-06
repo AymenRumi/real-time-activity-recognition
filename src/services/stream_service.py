@@ -14,7 +14,7 @@ class HumanActivitySensor:
         self.settings = KafkaSettings()
 
         self.__connect_to_source()
-        # self.__connect_to_kafka()
+        self.__connect_to_kafka()
 
     def __connect_to_source(self):
         self.data_source = pd.read_csv(self.settings.KAFKA_DATA_SOURCE)

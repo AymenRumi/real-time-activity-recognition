@@ -1,14 +1,15 @@
-from pydantic import Base, Field
+from pydantic_settings import BaseSettings
 
 
-class KafkaSettings(Base):
-    bootstrap_servers: str = Field(None, env="KAFKA_BOOTSTRAP_SERVER")
-    client_id: str = Field(None, env="KAFKA_CLIENT_ID")
+class KafkaSettings(BaseSettings):
+    KAFKA_BOOTSTRAP_SERVER: str
+    KAFKA_CLIENT_ID: str
+    KAFKA_DATA_SOURCE: str
 
 
-class FlinkSettings(Base):
-    server: str = Field(None, env="FLINK_SERVER")
+# class FlinkSettings(BaseSettings):
+#     server: str = Field(None, env="FLINK_SERVER")
 
 
-class MLFlowSettings(Base):
-    server: str = Field(None, env="MLFLOW_SERVER")
+# class MLFlowSettings(BaseSettings):
+#     server: str = Field(None, env="MLFLOW_SERVER")

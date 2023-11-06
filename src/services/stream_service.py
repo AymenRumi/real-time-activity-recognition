@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 from confluent_kafka import Producer
 
@@ -34,7 +36,7 @@ class HumanActivitySensor:
         )
         self.kafka_producer.poll(0)
 
-    def __delivery_report(err, msg):
+    def __delivery_report(self, err, msg):
         if err is not None:
             logger.warning(f"Message delivery failed: {err}")
         else:
@@ -45,6 +47,11 @@ class HumanActivitySensor:
         i = 0
         rows = len(self.data_source)
         while True:
-            self.__push_sensor_data(self.data_source.iloc[i % rows].to_dict())
+            self.__push_sensor_data(
+                json.dumps(self.data_source.iloc[i % rows].to_dict()).encode("utf-8")
+            )
             self.kafka_producer.flush()
             i += 1
+
+            if i == 10:
+                break

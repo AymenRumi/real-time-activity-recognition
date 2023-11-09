@@ -9,7 +9,7 @@ DATA_PATH = "src/data"
 
 def label_activity_chunks(df: pd.DataFrame):
     chunk = 1
-    chunk = [1] + [
+    chunk = [chunk] + [
         chunk := chunk + 1 if (activity != df["activity"][i + 1]) else chunk
         for i, activity in enumerate(df["activity"][:-1])
     ]

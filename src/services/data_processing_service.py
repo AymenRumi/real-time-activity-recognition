@@ -36,7 +36,6 @@ def create_dataset_multithreaded(df:pd.DataFrame, data_path:str):
 
 
 def create_dataset(df:pd.DataFrame, data_path:str):
-
     create_folders(df)
 
     for index, activity_chunk in enumerate(df.activity_chunk.unique()):

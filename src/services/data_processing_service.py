@@ -7,6 +7,8 @@ import pandas as pd
 Functions for creating dataset for model training, functions are called from jupyter notebook
 """
 
+WINDOW_SIZE = 7
+
 
 def create_folders(df: pd.DataFrame, data_path: str):
     for activity in df.activity.unique():
@@ -21,12 +23,11 @@ def process_chunk(activity_chunk, data_path):
     chunk = df.query(f"activity_chunk == {activity_chunk}")
     if chunk.activity.nunique() == 1:
         folder = chunk.activity.unique()[0]
-        window_size = 7
         [
-            chunk[i : window_size + i]
+            chunk[i : WINDOW_SIZE + i]
             .drop(columns=["activity", "activity_chunk"])
             .to_csv(f"{data_path}/{folder}/chunk_{activity_chunk}_{i}.csv", index=False)
-            for i in range(len(chunk) - window_size + 1)
+            for i in range(len(chunk) - WINDOW_SIZE + 1)
         ]
 
 
@@ -42,14 +43,13 @@ def create_dataset(df: pd.DataFrame, data_path: str):
 
     for index, activity_chunk in enumerate(df.activity_chunk.unique()):
         chunk = df.query("activity_chunk == @activity_chunk")
-        window_size = 7
         if chunk.activity.nunique() == 1:
             folder = chunk.activity.unique()[0]
             [
-                chunk[i : window_size + i]
+                chunk[i : WINDOW_SIZE + i]
                 .drop(columns=["activity", "activity_chunk"])
                 .to_csv(
                     f"{data_path}/{folder}/chunk_{activity_chunk}_{i}.csv", index=False
                 )
-                for i in range(len(chunk) - window_size + 1)
+                for i in range(len(chunk) - WINDOW_SIZE + 1)
             ]

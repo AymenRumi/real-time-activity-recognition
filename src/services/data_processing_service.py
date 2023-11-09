@@ -22,14 +22,12 @@ def process_chunk(activity_chunk, data_path):
     if chunk.activity.nunique() == 1:
         folder = chunk.activity.unique()[0]
         window_size = 7
-        for i in range(len(chunk) - window_size + 1):
-            chunk_slice = chunk[i : window_size + i].drop(
-                columns=["activity", "activity_chunk"]
-            )
-            chunk_slice.to_csv(
-                f"{data_path}/{folder}/chunk_{activity_chunk}_{i}.csv", index=False
-            )
-            print(f"saved to : {data_path}/{folder}/chunk_{activity_chunk}_{i}.csv")
+        [
+            chunk[i : window_size + i]
+            .drop(columns=["activity", "activity_chunk"])
+            .to_csv(f"{data_path}/{folder}/chunk_{activity_chunk}_{i}.csv", index=False)
+            for i in range(len(chunk) - window_size + 1)
+        ]
 
 
 def create_dataset_multithreaded(df: pd.DataFrame, data_path: str):
@@ -47,10 +45,11 @@ def create_dataset(df: pd.DataFrame, data_path: str):
         window_size = 7
         if chunk.activity.nunique() == 1:
             folder = chunk.activity.unique()[0]
-            for i in range(len(chunk) - window_size + 1):
-                chunk[i : window_size + i].drop(
-                    columns=["activity", "activity_chunk"]
-                ).to_csv(
+            [
+                chunk[i : window_size + i]
+                .drop(columns=["activity", "activity_chunk"])
+                .to_csv(
                     f"{data_path}/{folder}/chunk_{activity_chunk}_{i}.csv", index=False
                 )
-                print(f"saved to : {data_path}/{folder}/chunk_{activity_chunk}_{i}.csv")
+                for i in range(len(chunk) - window_size + 1)
+            ]

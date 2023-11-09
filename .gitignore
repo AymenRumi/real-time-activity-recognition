@@ -77,9 +77,6 @@ docs/_build/
 # PyBuilder
 target/
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
 # pyenv
 .python-version
 
@@ -114,7 +111,6 @@ venv.bak/
 
 # jupyter
 
-!Tracking-EDA.ipynb
 
 #Pycharm project files
 .idea
@@ -154,4 +150,3 @@ mlflowruns/
 
 mlflow_db/
 
-.ipynb_checkpoints

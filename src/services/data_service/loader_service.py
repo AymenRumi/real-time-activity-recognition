@@ -10,7 +10,6 @@ class CustomDataset(Dataset):
         self.data_files = []
         self.labels = []
 
-        # Define a mapping for the labels
         self.label_mapping = {
             "LAYING": 0,
             "SITTING": 1,
@@ -20,11 +19,10 @@ class CustomDataset(Dataset):
             "WALKING_UPSTAIRS": 5,
         }
 
-        # Scanning through the directory and subdirectories
         for label_folder in os.listdir(directory):
             label_path = os.path.join(directory, label_folder)
             if os.path.isdir(label_path):
-                # Extract label from folder name
+
                 label = self.label_mapping[label_folder]
                 for file in os.listdir(label_path):
                     if file.endswith(".csv"):
@@ -36,21 +34,26 @@ class CustomDataset(Dataset):
         return len(self.data_files)
 
     def __getitem__(self, idx):
-        # Read the CSV file and convert to numpy array
+
         data_array = pd.read_csv(self.data_files[idx]).to_numpy()
         label = self.labels[idx]
         return torch.tensor(data_array, dtype=torch.float32), label
 
 
-def create_data_loader(directory, batch_size=32, shuffle=True):
-    dataset = CustomDataset(directory)
-    return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle)
+def create_data_loaders(directory, batch_size=32, train_split=0.8):
+    # Create the full dataset
+    full_dataset = CustomDataset(directory)
 
+    # Splitting the dataset
+    total_size = len(full_dataset)
+    train_size = int(train_split * total_size)
+    test_size = total_size - train_size
+    train_dataset, test_dataset = torch.utils.data.random_split(
+        full_dataset, [train_size, test_size]
+    )
 
-# Example usage
-data_loader = create_data_loader("src/data/HAR", batch_size=64)
+    # Create DataLoaders for both datasets
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
-# # In your training loop
-# for data, labels in data_loader:
-#     # Use data and labels for training
-#     pass
+    return train_loader, test_loader

@@ -113,7 +113,7 @@ venv.bak/
 .mypy_cache/
 
 # jupyter
-*.ipynb
+
 !Tracking-EDA.ipynb
 
 #Pycharm project files

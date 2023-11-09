@@ -9,7 +9,7 @@ parent_dir = scripts_dir.parent
 sys.path.append(str(parent_dir))
 
 
-from src.services.data_processing_service import (
+from src.services.data_service import (
     create_dataset,
     create_dataset_multithreaded,
     create_folders,
@@ -23,7 +23,7 @@ DATA_PATH = "src/data/train.csv"
 @click.command()
 @click.option("-m", "--multithreaded", is_flag=True, help="Run in multithreaded mode.")
 def run(multithreaded):
-    df = pd.read_csv(DATA_PATH).pipe(label_activity_chunks)
+    df = pd.read_csv(DATA_PATH).pipe(label_activity_chunks).drop(columns=["rn"])
     create_folders(df)
 
     if multithreaded:

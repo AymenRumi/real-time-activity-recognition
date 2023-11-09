@@ -2,8 +2,12 @@ import os
 import pandas as pd
 from concurrent.futures import ThreadPoolExecutor
 
+"""
+Functions for creating dataset for model training, functions are called from jupyter notebook
 
-def create_folders(df, data_path):
+"""
+
+def create_folders(df:pd.DataFrame,, data_path:str):
     for activity in df.activity.unique():
 
         new_path = f"{data_path}/{activity}"
@@ -38,13 +42,9 @@ def create_dataset(df:pd.DataFrame, data_path:str):
 
     for index, activity_chunk in enumerate(df.activity_chunk.unique()):
         chunk = df.query("activity_chunk == @activity_chunk")
-
         window_size = 7
-
         if chunk.activity.nunique() == 1:
             folder = chunk.activity.unique()[0]
-
             for i in range(len(chunk) - window_size + 1):
-
                 chunk[i : window_size + i].drop(columns=["activity", "activity_chunk"]).to_csv(f"{data_path}/{folder}/chunk_{activity_chunk}_{i}.csv", index=False)
                 print(f"saved to : {data_path}/{folder}/chunk_{activity_chunk}_{i}.csv")

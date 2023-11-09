@@ -34,31 +34,26 @@ services:
     restart: always
 
   jobmanager:
-    image: flink:latest
-    container_name: jobmanager
+    image: apache/flink:1.13.0
     ports:
       - "8081:8081"
-    networks:
-      - kafka-network
     command: jobmanager
+    volumes:
+      - ./flink-jars:/opt/flink/usrlib
     environment:
-      - |
-        FLINK_PROPERTIES=
-        jobmanager.rpc.address: jobmanager
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
 
   taskmanager:
-    image: flink:latest
-    container_name: taskmanager
+    image: apache/flink:1.13.0
     depends_on:
       - jobmanager
-    networks:
-      - kafka-network
     command: taskmanager
+    volumes:
+      - ./flink-jars:/opt/flink/usrlib
     environment:
-      - |
-        FLINK_PROPERTIES=
-        jobmanager.rpc.address: jobmanager
-        taskmanager.numberOfTaskSlots: 2
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+
+
 
 networks:
   kafka-network:

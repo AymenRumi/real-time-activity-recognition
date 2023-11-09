@@ -4,6 +4,8 @@ import pandas as pd
 import torch
 from torch.utils.data import DataLoader, Dataset
 
+DIRECTORY_PATH = "src/data"
+
 
 class CustomDataset(Dataset):
     def __init__(self, directory):
@@ -35,12 +37,12 @@ class CustomDataset(Dataset):
 
     def __getitem__(self, idx):
 
-        data_array = pd.read_csv(self.data_files[idx]).to_numpy()
+        data_array = pd.read_csv(self.data_files[idx]).to_numpy().reshape(1, 7, 561)
         label = self.labels[idx]
         return torch.tensor(data_array, dtype=torch.float32), label
 
 
-def create_data_loaders(directory, batch_size=32, train_split=0.8):
+def create_data_loaders(directory=DIRECTORY_PATH, batch_size=32, train_split=0.8):
     # Create the full dataset
     full_dataset = CustomDataset(directory)
 
@@ -54,6 +56,6 @@ def create_data_loaders(directory, batch_size=32, train_split=0.8):
 
     # Create DataLoaders for both datasets
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=True)
 
     return train_loader, test_loader

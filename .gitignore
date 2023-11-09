@@ -156,3 +156,5 @@ mlflow_db/
 .ipynb_checkpoints
 
 data
+
+*.pth

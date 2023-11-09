@@ -42,16 +42,12 @@ def process_chunk(df, activity_chunk):
 
 
 def create_dataset_multithreaded(df: pd.DataFrame):
-    create_folders(df)
-
     activity_chunks = df.activity_chunk.unique()
     with ThreadPoolExecutor(max_workers=10) as executor:
         executor.map(lambda chunk: process_chunk(df, chunk), activity_chunks)
 
 
 def create_dataset(df: pd.DataFrame):
-    create_folders(df)
-
     for index, activity_chunk in enumerate(df.activity_chunk.unique()):
         chunk = df.query(f"activity_chunk == @activity_chunk")
         if chunk.activity.nunique() == 1:

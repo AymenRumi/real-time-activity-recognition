@@ -45,13 +45,11 @@ class DataWindowing:
             ]
 
     def create_dataset_multithreaded(self, df: pd.DataFrame):
-
         activity_chunks = df.activity_chunk.unique()
         with ThreadPoolExecutor(max_workers=10) as executor:
             executor.map(lambda chunk: self.process_chunk(df, chunk), activity_chunks)
 
     def create_dataset(self, df: pd.DataFrame):
-
         for index, activity_chunk in enumerate(df.activity_chunk.unique()):
             chunk = df.query(f"activity_chunk == @activity_chunk")
             if chunk.activity.nunique() == 1:

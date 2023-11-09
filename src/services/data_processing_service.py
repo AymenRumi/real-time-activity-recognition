@@ -4,7 +4,6 @@ from concurrent.futures import ThreadPoolExecutor
 
 """
 Functions for creating dataset for model training, functions are called from jupyter notebook
-
 """
 
 def create_folders(df:pd.DataFrame,, data_path:str):

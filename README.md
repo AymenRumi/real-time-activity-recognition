@@ -1,4 +1,4 @@
-# Real time Human Activity Recognition
+# Real Time Human Activity Recognition
 
 ## TODO: Finnish detailed ReadMe
 

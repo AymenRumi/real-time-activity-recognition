@@ -18,7 +18,7 @@ python -m src.jobs.start_stream
 
 
 ```bash
-# Start the stream processing to recognize human activity
+# Start the stream processing to recognize human activity (pytorch model must be trained)
 python -m src.jobs.handle_stream
 ```
 

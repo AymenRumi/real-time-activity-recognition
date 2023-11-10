@@ -1,6 +1,6 @@
 # Real time Human Activity Recognition
 
-## TODO: Finnish Detailed ReadMe
+## TODO: Finnish detailed ReadMe
 
 
 ### Demo

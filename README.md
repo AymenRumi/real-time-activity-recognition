@@ -1,4 +1,8 @@
-# real-time-activity-recognition
+# Real time Human Activity Recognition
+
+## TODO: Finnish Detailed ReadMe
 
 
-Please Note - this project is a work in progress...
+### Demo:
+<video src="https://github.com/AymenRumi/real-time-activity-recognition/blob/main/assets/demo.mp4" controls>
+

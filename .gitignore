@@ -122,8 +122,7 @@ venv.bak/
 #Pycharm project files
 .idea
 
-# Video output
-*.mp4
+#
 # parquet output
 *.parquet
 

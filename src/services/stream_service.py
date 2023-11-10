@@ -41,15 +41,20 @@ class HumanActivitySensor:
         if err is not None:
             logger.warning(f"Message delivery failed: {err}")
         else:
-            logger.info(f"Message delivered to {msg.topic()} [{msg.partition()}]")
+            logger.info(
+                f"Sensor data delivered delivered to producer:{msg.topic()}[{msg.partition()}]"
+            )
 
     def start_stream(self):
 
         i = 0
+
         rows = len(self.data_source)
         while True:
+
             self.__push_sensor_data(
                 encode_sensor_data(self.data_source.iloc[i % rows].to_dict())
+                # encode_sensor_data({"time":datetime.now().strftime("%H:%M:%S")})
             )
             self.kafka_producer.flush()
             i += 1

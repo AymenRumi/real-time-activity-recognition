@@ -1,21 +1,26 @@
 version: '3'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+    image: confluentinc/cp-zookeeper:7.4.3
     container_name: zookeeper
-    ports:
-      - "2181:2181"
     networks:
       - kafka-network
+    ports:
+      - "2181:2181"
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    volumes:
+      - ./zoo/data:/var/lib/zookeeper/data
+      - ./zoo/log:/var/lib/zookeeper/log
 
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: kafka
     depends_on:
       - zookeeper
+    volumes:
+      - ./kafka/data:/var/lib/kafka/data
     ports:
       - "29092:29092"
       - "9092:9092"
@@ -33,51 +38,9 @@ services:
     # The restart policy is set to 'always' to ensure it retries in case of initial failure.
     restart: always
 
-  jobmanager:
-    image: apache/flink:1.13.0
-    ports:
-      - "8081:8081"
-    command: jobmanager
-    volumes:
-      - ./flink-jars:/opt/flink/usrlib
-    environment:
-      - JOB_MANAGER_RPC_ADDRESS=jobmanager
-
-  taskmanager:
-    image: apache/flink:1.13.0
-    depends_on:
-      - jobmanager
-    command: taskmanager
-    volumes:
-      - ./flink-jars:/opt/flink/usrlib
-    environment:
-      - JOB_MANAGER_RPC_ADDRESS=jobmanager
 
 
 
 networks:
   kafka-network:
     driver: bridge
-
-
-
-  # jobmanager:
-  #   image: flink:latest
-  #   ports:
-  #     - "8081:8081"
-  #   command: jobmanager
-  #   environment:
-  #     - |
-  #       FLINK_PROPERTIES=
-  #       jobmanager.rpc.address: jobmanager
-
-  # taskmanager:
-  #   image: flink:latest
-  #   depends_on:
-  #     - jobmanager
-  #   command: taskmanager
-  #   environment:
-  #     - |
-  #       FLINK_PROPERTIES=
-  #       jobmanager.rpc.address: jobmanager
-  #       taskmanager.numberOfTaskSlots: 2

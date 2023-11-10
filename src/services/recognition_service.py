@@ -1,7 +1,11 @@
+import torch
 from confluent_kafka import Consumer, KafkaError
 
 from src.config import KafkaSettings
+from src.mlflow.model import ConvNN
+from src.services.ml_service import logit_to_activity
 from src.services.sensor_service import decode_sensor_data, read_buffer
+from src.utils.logging import logger
 
 WINDOW_SIZE = 7
 
@@ -21,20 +25,35 @@ class RealTimeRecognition:
         conf = {
             "bootstrap.servers": self.settings.KAFKA_BOOTSTRAP_SERVER,
             "group.id": "mygroup",  # Consumer group ID
-            "auto.offset.reset": "earliest",  # Start from the earliest messages
+            "auto.offset.reset": "latest",  # Start from the latest
             "enable.auto.commit": True,
         }
         self.kafka_consumer = Consumer(conf)
         self.kafka_consumer.subscribe([self.settings.KAFKA_CLIENT_ID])
 
-    def load_model_from_regsistry(self):
-        pass
+    def __tensor(self, buffer):
+        return buffer.unsqueeze(0).unsqueeze(0).float()
 
-    def predict_activity(self):
-        pass
+    def load_model_from_registry(self):
+
+        logger.info("Initializing Model:")
+        model = ConvNN()
+
+        model.load_state_dict(torch.load("checkpoint.pth")["model_state_dict"])
+        logger.info(model)
+        model.eval()
+
+        return model
+
+    def predict_activity(self, buffer):
+        with torch.no_grad():
+            return logit_to_activity(self.model(self.__tensor(buffer)))
 
     def read_sensor_stream(self):
         # Initialize an empty list as the buffer
+
+        if not self.model:
+            raise Exception("No Model")
         buffer = []
 
         try:
@@ -50,19 +69,17 @@ class RealTimeRecognition:
                         print(sensor_data.error())
                         break
 
-                # Decode and load the message
-                message_value = decode_sensor_data(sensor_data.value())
+                data = decode_sensor_data(sensor_data.value())
 
-                # Add the message to the buffer
-                buffer.append(message_value)
+                buffer.append(data)
 
-                # Maintain the buffer size to the last 10 messages
                 if len(buffer) > WINDOW_SIZE:
-                    buffer.pop(0)  # Remove the oldest message
+                    buffer.pop(0)
 
-                # Optional: Print the type of the message or other processing
-                print(read_buffer(buffer).size())
-                print("")
+                # print(read_buffer(buffer))
+
+                if len(buffer) == WINDOW_SIZE:
+                    logger.task((self.predict_activity(read_buffer(buffer))))
 
         except KeyboardInterrupt:
             pass

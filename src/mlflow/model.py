@@ -13,7 +13,6 @@ class ConvNN(nn.Module):
         # Pooling layer
         self.pool = nn.MaxPool2d(2, 2)
 
-        # Calculate size after convolutions and pooling
         def conv2d_size_out(size, kernel_size=3, stride=1, padding=1):
             return (size + 2 * padding - (kernel_size - 1) - 1) // stride + 1
 
@@ -25,16 +24,13 @@ class ConvNN(nn.Module):
         poolw = pool_size_out(pool_size_out(convw))
         poolh = pool_size_out(pool_size_out(convh))
 
-        linear_input_size = (
-            poolw * poolh * 64
-        )  # 64 is the number of output channels from the last conv layer
+        linear_input_size = poolw * poolh * 64
 
-        # Fully connected layers
         self.fc1 = nn.Linear(linear_input_size, 1000)
         self.fc2 = nn.Linear(1000, num_classes)
 
     def forward(self, x):
-        # Apply conv layer, followed by ReLU, then pooling
+
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
 
@@ -47,7 +43,7 @@ class ConvNN(nn.Module):
         return x
 
     def num_flat_features(self, x):
-        size = x.size()[1:]  # all dimensions except the batch dimension
+        size = x.size()[1:]
         num_features = 1
         for s in size:
             num_features *= s

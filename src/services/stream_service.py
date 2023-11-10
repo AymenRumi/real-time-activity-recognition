@@ -1,9 +1,8 @@
-import json
-
 import pandas as pd
 from confluent_kafka import Producer
 
 from src.config import KafkaSettings
+from src.services.sensor_service import encode_sensor_data
 from src.utils import logger
 
 
@@ -50,7 +49,7 @@ class HumanActivitySensor:
         rows = len(self.data_source)
         while True:
             self.__push_sensor_data(
-                json.dumps(self.data_source.iloc[i % rows].to_dict()).encode("utf-8")
+                encode_sensor_data(self.data_source.iloc[i % rows].to_dict())
             )
             self.kafka_producer.flush()
             i += 1

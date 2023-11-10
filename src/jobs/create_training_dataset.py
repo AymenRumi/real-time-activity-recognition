@@ -1,13 +1,5 @@
-import sys
-from pathlib import Path
-
 import click
 import pandas as pd
-
-scripts_dir = Path(__file__).parent.absolute()
-parent_dir = scripts_dir.parent
-sys.path.append(str(parent_dir))
-
 
 from src.services.data_service import (
     create_dataset,

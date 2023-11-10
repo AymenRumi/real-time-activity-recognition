@@ -7,8 +7,8 @@ class KafkaSettings(BaseSettings):
     KAFKA_DATA_SOURCE: str
 
 
-# class FlinkSettings(BaseSettings):
-#     server: str = Field(None, env="FLINK_SERVER")
+class FlinkSettings(BaseSettings):
+    FLINK_SERVER: str
 
 
 # class MLFlowSettings(BaseSettings):

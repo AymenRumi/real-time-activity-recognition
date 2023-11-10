@@ -20,7 +20,7 @@ if __name__ == "__main__":
             train_data_loader
         ):  # Assuming you have a data_loader
             # Forward pass
-            print(images.size())
+
             outputs = model(images)
             loss = criterion(outputs, labels)
 
@@ -34,8 +34,11 @@ if __name__ == "__main__":
                     f"Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{len(train_data_loader)}], Loss: {loss.item():.4f}"
                 )
 
-    # torch.save({
-    #     'model_state_dict': model.state_dict(),
-    #     'optimizer_state_dict': optimizer.state_dict(),
-    #     'loss': loss,
-    # }, f'checkpoint.pth')
+    torch.save(
+        {
+            "model_state_dict": model.state_dict(),
+            "optimizer_state_dict": optimizer.state_dict(),
+            "loss": loss,
+        },
+        f"checkpoint.pth",
+    )

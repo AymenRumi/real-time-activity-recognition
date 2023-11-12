@@ -58,7 +58,7 @@ pip install -r requirements.txt
 
 ## Training the Model
 
-### Create the dataset
+### Create Model Training Dataset
 
 ```bash
 # Script for creating training data with, use flag -m to create with multithreads

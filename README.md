@@ -30,9 +30,13 @@ python -m src.jobs.handle_stream
 
 ## Getting Started
 Prerequisites
+<br />
 Docker and Docker Compose
-Python 3.x
+<br />
+Python
+<br />
 Apache Kafka
+<br />
 PyTorch
 
 ## Training the Model

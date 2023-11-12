@@ -60,6 +60,8 @@ pip install -r requirements.txt
 
 ### Create Model Training Dataset
 
+Dataset is chunked into instances of activity then windowed with a size of 7 (configurable) in directory struture for PyTorch's `DataLoader` class.
+
 ```bash
 # Script for creating training data with, use flag -m to create with multithreads
 python -m src.jobs.create_training_dataset -m

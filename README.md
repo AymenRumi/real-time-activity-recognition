@@ -29,7 +29,7 @@ python -m src.jobs.handle_stream
 
 
 ## Getting Started
-Prerequisites
+<b>Prerequisites<b/>
 <br />
 Docker and Docker Compose
 <br />

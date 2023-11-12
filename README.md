@@ -62,14 +62,14 @@ pip install -r requirements.txt
 
 ```bash
 # Script for creating training data with, use flag -m to create with multithreads
-
 python -m src.jobs.create_training_dataset -m
-
-# or without 
-
+```
+```bash
+# Without multithreads (slower)
 python -m src.jobs.create_training_dataset 
 
 ```
+
 
 <img src="https://github.com/AymenRumi/real-time-activity-recognition/blob/main/assets/demo_dataset.gif">
 

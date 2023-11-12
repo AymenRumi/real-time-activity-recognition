@@ -17,7 +17,7 @@ docker-compose up
 python -m src.jobs.start_stream
 ```
 
-
+`
 ```bash
 # Start the stream processing to recognize human activity (pytorch model must be trained)
 python -m src.jobs.handle_stream
@@ -29,7 +29,7 @@ python -m src.jobs.handle_stream
 
 
 ## Getting Started
-<b>Prerequisites<b/>
+<b>Prerequisites</b>:
 <br />
 Docker and Docker Compose
 <br />

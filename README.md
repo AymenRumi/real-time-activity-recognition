@@ -1,6 +1,14 @@
 # Real Time Human Activity Recognition
 
-## TODO: Finnish detailed ReadMe
+## Project Overview
+This project simulates a multidimensional stream of sensor data, using Apache Kafka for real-time data handling. It involves a Kafka producer pushing simulated sensor data in real-time, and a Kafka consumer classifying human activities from this data stream. The project uses Docker Compose to run the Kafka server and PyTorch for training a machine learning model. The model is trained using a static dataset, windowed and loaded into PyTorch's DataLoader with a window size of 7. This trained model is then employed for real-time activity recognition.
+
+## Getting Started
+Prerequisites
+Docker and Docker Compose
+Python 3.x
+Apache Kafka
+PyTorch
 
 
 ### Demo

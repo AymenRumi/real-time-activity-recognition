@@ -10,8 +10,14 @@ Python 3.x
 Apache Kafka
 PyTorch
 
+## Training the Model
+Load the static dataset.
+Window the data with a size of 7.
+Input the data into PyTorch's DataLoader.
+Train the model using PyTorch.
 
-### Demo
+
+## Demo
 
 ```bash
 # Start zookeeper & kafka with docker-compose

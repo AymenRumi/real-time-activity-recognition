@@ -40,6 +40,20 @@ PyTorch
 <br />
 MLFlow
 
+
+
+```bash
+git clone https://github.com/AymenRumi/real-time-activity-recognition.git
+```
+
+```bash
+python -m venv env
+source env/bin/activate
+
+pip install -r requirements.txt
+```
+
+
 ## Training the Model
 Load the static dataset.
 Window the data with a size of 7.

@@ -43,10 +43,12 @@ MLFlow
 
 
 ```bash
+# clone repo
 git clone https://github.com/AymenRumi/real-time-activity-recognition.git
 ```
 
 ```bash
+# start environment
 python -m venv env
 source env/bin/activate
 
@@ -55,7 +57,17 @@ pip install -r requirements.txt
 
 
 ## Training the Model
-Load the static dataset.
-Window the data with a size of 7.
-Input the data into PyTorch's DataLoader.
-Train the model using PyTorch.
+
+### Create the dataset
+
+```bash
+# Script for creating training data with, use flag -m to create with multithreads
+
+python -m src.jobs.create_training_dataset -m
+
+# or without 
+
+python -m src.jobs.create_training_dataset 
+
+```
+

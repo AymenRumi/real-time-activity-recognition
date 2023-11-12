@@ -71,5 +71,5 @@ python -m src.jobs.create_training_dataset
 ```
 
 
-<img src="https://github.com/AymenRumi/real-time-activity-recognition/blob/main/assets/demo_dataset.gif">
+<img src="https://github.com/AymenRumi/real-time-activity-recognition/blob/main/assets/demo_dataset.gif" height="50%" width="50%">
 

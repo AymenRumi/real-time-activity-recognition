@@ -6,6 +6,8 @@ This project simulates a multidimensional stream of sensor data, using `Apache K
 
 ## Project Demo
 
+
+
 ```bash
 # Start zookeeper & kafka with docker-compose
 docker-compose up 
@@ -13,6 +15,8 @@ docker-compose up
 
 
 ```bash
+# Before starting script
+python setup.py install
 # Run the stream data simulation script
 python -m src.jobs.start_stream
 ```

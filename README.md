@@ -17,6 +17,7 @@ docker-compose up
 ```bash
 # Before starting script
 python setup.py install
+
 # Run the stream data simulation script
 python -m src.jobs.start_stream
 ```
